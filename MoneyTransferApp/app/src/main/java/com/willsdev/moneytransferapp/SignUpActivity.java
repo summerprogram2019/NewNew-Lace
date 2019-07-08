@@ -28,7 +28,7 @@ public class SignUpActivity extends AppCompatActivity
 //        String country_id = ((EditText)findViewById(R.id.signup_country_id)).getText().toString();
 //        String language_id = ((EditText)findViewById(R.id.signup_language_id)).getText().toString();
 
-        Map<String, String> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
 //        data.put("user",user_entry);
 //        data.put("pass",pass_entry);
 //        data.put("name",name_entry);

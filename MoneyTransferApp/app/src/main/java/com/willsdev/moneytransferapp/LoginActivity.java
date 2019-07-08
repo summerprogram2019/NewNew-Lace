@@ -2,6 +2,7 @@ package com.willsdev.moneytransferapp;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,9 +28,9 @@ import java.util.Map;
 class RunQuery {
     DBController dbController;
     QueryType queryType;
-    Map<String, String> data;
+    Map<String, Object> data;
 
-    public RunQuery(DBController dbController, QueryType queryType, Map<String,String> data) {
+    public RunQuery(DBController dbController, QueryType queryType, Map<String,Object> data) {
         this.dbController = dbController;
         this.queryType = queryType;
         this.data = data;
@@ -68,21 +70,41 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
         }
         switch (runQuery.queryType) {
             case LOGIN:{
-                String login_query = "select * from users where login=\""+runQuery.data.get("user")+"\" and pass=\"" + runQuery.data.get("pass") + "\"";
+                String user = (String) runQuery.data.get("user");
+                String pass = (String) runQuery.data.get("pass");
+                String login_query = "select * from users where login=\""+user+"\" and password=\"" + pass + "\"";
                 try
                 {
-                    int result = runQuery.dbController.getData(login_query).getMetaData().getColumnCount();
-                    if(result>0){
+                    ResultSet result = runQuery.dbController.getData(login_query);
+                    int count = 0;
+                    int id = 0;
+                    while (result.next()) {
+                        id = result.getInt("user_id");
+                        count++;
+                    }
+                    if(count>0){
+                        activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("user",user).apply();
+                        activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("pass",pass).apply();
+                        activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putInt("user_id",id).apply();
                         Intent intent = new Intent(activity.getApplication().getApplicationContext(), MainActivity.class);
                         activity.startActivity(intent);
                     }
                 } catch (Exception e)
                 {
+                    activity.runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(activity.getApplicationContext(),"Login Failed. Please check your username and password",Toast.LENGTH_LONG).show();
+                        }
+                    });
                     e.printStackTrace();
                 }
+                break;
             }
             case GET_WALLETS:{
-                String user_id = runQuery.data.get("user_id");
+                int user_id = activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",0);
                 try {
                     ResultSet currencies = runQuery.dbController.getData("select * from currencies");
                     Map<Integer, Currency> temp = new HashMap<>();
@@ -143,15 +165,24 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         Wallet wallet = new Wallet(code,country,symbol,amount);
                         wallets.add(wallet);
                     }
-                    ListView sv = activity.findViewById(R.id.wallet_scroll);
-                    MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.getApplicationContext());
-                    sv.setAdapter(wallet_adapter);
-                } catch (Exception e){}
+                    final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.getApplicationContext());
+                    activity.runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            ((ListView)runQuery.data.get("wallet_listview")).setAdapter(wallet_adapter);
+                        }
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
             }
             case TRANSFER:{
-                String user_id = runQuery.data.get("user_id");
-                String from_act = runQuery.data.get("initial_amt");
-                String to_act = runQuery.data.get("final_amt");
+                String user_id = (String) runQuery.data.get("user_id");
+                String from_act = (String) runQuery.data.get("initial_amt");
+                String to_act = (String) runQuery.data.get("final_amt");
                 int transfer_from = runQuery.dbController.update(String.format("UPDATE accounts set amount=%s where users_user_id=%s and currencies_currency_id=10",from_act,user_id));
                 int transfer_to = runQuery.dbController.update(String.format("UPDATE accounts set amount=%s where users_user_id=%s and currencies_currency_id=10",to_act,user_id));
                 if(transfer_from+transfer_to!=2){
@@ -163,15 +194,17 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         e.printStackTrace();
                     }
                 }
+                break;
             }
             case SIGNUP:{
-                Map<String, String> data = runQuery.data;
-                String user = data.get("user");
-                String pass = data.get("pass");
-                String name = data.get("name");
-                String country = data.get("country");
-                String language = data.get("language");
+                Map<String, Object> data = runQuery.data;
+                String user = (String) data.get("user");
+                String pass = (String) data.get("pass");
+                String name = (String) data.get("name");
+                String country = (String) data.get("country");
+                String language = (String) data.get("language");
                 String query = "";
+                break;
             }
         }
         return map;
@@ -187,35 +220,33 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getApplication();
+        final EditText login = findViewById(R.id.login_user);
+        final EditText pass = findViewById(R.id.login_pass);
 
-        String login = ((EditText)findViewById(R.id.login_user)).getText().toString();
-        String pass = ((EditText)findViewById(R.id.login_pass)).getText().toString();
-        Map<String,String> data = new HashMap<>();
-        data.put("user",login);
-        data.put("pass",pass);
-        final RunQuery runQuery = new RunQuery(null, QueryType.LOGIN, data);
-
-        Button login_btn = findViewById(R.id.btn_login);
+        Button login_btn = findViewById(R.id.btn_login1);
         login_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                Map<String,Object> data = new HashMap<>();
+                data.put("user",login.getText().toString());
+                data.put("pass",pass.getText().toString());
+                final RunQuery runQuery = new RunQuery(null, QueryType.LOGIN, data);
                 NetworkThread networkThread = new NetworkThread(runQuery, LoginActivity.this);
                 networkThread.execute(runQuery);
             }
         });
 
-        Button signup = findViewById(R.id.btn_signup);
-        signup.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
+//        Button signup = findViewById(R.id.btn_signup);
+//        signup.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

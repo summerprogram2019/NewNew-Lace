@@ -117,27 +117,13 @@ public class ExampleUnitTest
         String pass = "123123123App";
         DBController controller = new DBController(host, user, pass);
 
-//        int resultSet = controller.update("INSERT INTO accounts VALUES(0,1,11)");
-//        System.out.println(resultSet);
-//
-//        int resultSet = controller.update("INSERT INTO currencies VALUES(11,\"China\",\"CNY\")");
-//        System.out.println(resultSet);
-//        ResultSet rs = controller.getData("SELECT * from currencies");
-////        ResultSet resultSet = controller.getData("INSERT INTO accounts VALUES (100, 1, 1.75, \"2006-02-02 15:35:00\" )");
-//        while (rs.next()) {
-//            System.out.println(rs.getInt("currency_id"));
-//            System.out.println(rs.getString("name"));
-//            System.out.println(rs.getString("code"));
-//        }
-        //update AUD
-        int results = controller.update("UPDATE accounts set amount=50 where users_user_id=1 and currencies_currency_id=10");
-        // update CNY
-        controller.update("UPDATE accounts set amount=350 where users_user_id=1 and currencies_currency_id=11");
-        ResultSet rs = controller.getData("SELECT * from accounts");
+        String muser = "NikSavilov";
+        String mpass = "123123123";
+        String login_query = "select * from users where login=\""+muser+"\" and password=\"" + mpass + "\"";
+        ResultSet rs = controller.getData(login_query);
         while (rs.next()) {
-            System.out.println(rs.getString("amount"));
-            System.out.println(rs.getString("users_user_id"));
-            System.out.println(rs.getString("currencies_currency_id"));
+            System.out.println(rs.getString("name"));
         }
+
     }
 }
