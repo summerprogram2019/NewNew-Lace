@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_wallet"
+        android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+        android:title="Wallet"/>
+
+    <item
+        android:id="@+id/navigation_transfer"
+        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:title="Rates"/>
+
+    <item
+        android:id="@+id/navigation_culture"
+        android:icon="@drawable/ic_museum"
+        android:title="Culture"/>
+
+</menu>
