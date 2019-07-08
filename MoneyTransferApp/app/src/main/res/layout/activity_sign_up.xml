@@ -12,98 +12,122 @@
         android:layout_height="match_parent"
         android:background="#374048"
         android:src="@drawable/monogram"
-        tools:layout_editor_absoluteX="-64dp"
-        tools:layout_editor_absoluteY="0dp" />
-
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="73dp" />
 
     <TextView
-        android:id="@+id/User_name"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="First Name"
-        android:textAlignment="viewStart"
-        android:textColor="#727F89"
-        android:textSize="24sp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Welcome"
+        android:textColor="#EED558"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="User Name"
-        android:textAlignment="viewStart"
-        android:textColor="#727F89"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/editText4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.361"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="118dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="72dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Password"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="87dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="152dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="Country"
-        android:textColor="#727F89"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="username"
-        android:inputType="textPersonName"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="104dp"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword"
+        android:layout_marginTop="18dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+
+        <TextView
+            android:id="@+id/User_name"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="First Name"
+            android:textAlignment="viewStart"
+            android:textColor="#EED558"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="282dp" />
+
+
+        <EditText
+            android:id="@+id/editText6"
+            android:layout_width="330dp"
+            android:layout_height="37dp"
+            android:background="#2C2E35"
+            android:ems="10"
+            android:hint="First Name"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="171dp"
+            tools:layout_editor_absoluteY="367dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="228dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="User Name"
+            android:textAlignment="viewStart"
+            android:textColor="#727F89"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="367dp" />
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="200dp"
+            android:layout_height="43dp"
+            android:background="#2C2E35"
+            android:ems="10"
+            android:hint="username"
+            android:inputType="textPersonName"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.862"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="367dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="118dp"
+            android:layout_height="47dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Password"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="422dp" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:background="#2C2E35"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="422dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Country"
+            android:textColor="#727F89"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout"
