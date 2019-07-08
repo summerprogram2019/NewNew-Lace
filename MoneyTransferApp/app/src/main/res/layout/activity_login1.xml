@@ -89,6 +89,8 @@
         android:layout_marginBottom="8dp"
         android:text="Sign Up"
         android:textColor="#727F89"
+        android:background="?android:attr/selectableItemBackground"
+        style="?android:attr/borderlessButtonStyle"
         app:layout_constraintBottom_toBottomOf="@+id/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
