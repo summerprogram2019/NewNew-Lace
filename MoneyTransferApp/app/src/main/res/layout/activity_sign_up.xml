@@ -59,13 +59,13 @@
 
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/signup_username"
             android:layout_width="330dp"
             android:layout_height="37dp"
             android:background="@drawable/edit_text_style"
             android:ems="10"
             android:hint="First Name"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:paddingLeft="5dp"
             android:textColor="#727F89"
             android:textColorHint="#727F89"
@@ -94,7 +94,7 @@
             tools:layout_editor_absoluteY="367dp" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/signup_password"
             android:layout_width="330dp"
             android:layout_height="37dp"
             android:background="#2C2E35"
@@ -128,14 +128,14 @@
             tools:layout_editor_absoluteY="422dp" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/signup_password_confirm"
             android:layout_width="330dp"
             android:layout_height="37dp"
             android:layout_marginEnd="28dp"
             android:background="#2C2E35"
             android:ems="10"
             android:hint="Phone number"
-            android:inputType="textPassword"
+            android:inputType="phone"
             android:paddingLeft="5dp"
             android:textColorHint="#727F89"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,7 +196,7 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/finish_sign_up"
+        android:id="@+id/splash_login"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
