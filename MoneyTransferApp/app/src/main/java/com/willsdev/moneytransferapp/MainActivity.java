@@ -219,6 +219,8 @@ public class MainActivity extends AppCompatActivity
         /* Set a listener that will be notified when a bottom navigation item is selected. */
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
+
+
         /* Start With Wallets */
         toolbar.setTitle("Wallet");
         WalletFragment walletFragment = new WalletFragment();

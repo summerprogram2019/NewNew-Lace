@@ -61,9 +61,11 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
 
     protected Map doInBackground(RunQuery... arg0) {
         Map map = null;
+        runQuery.dbController = ((MyApplication)activity.getApplication()).dbController;
         if(runQuery.dbController==null) {
-            String host = "jdbc:mysql://91.132.103.123:3306/app?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String user = "root";
+            String ip = "192.168.43.98:3306";
+            String host = "jdbc:mysql://"+ip+"/app?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String user = "app";
             String pass = "123123123App";
             runQuery.dbController = new DBController(host,user,pass);
             ((MyApplication)activity.getApplication()).dbController = runQuery.dbController;
@@ -203,7 +205,40 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 String name = (String) data.get("name");
                 String country = (String) data.get("country");
                 String language = (String) data.get("language");
-                String query = "";
+                ResultSet rs;
+
+                String check_avail = "select * from users where login=\""+user+"\"";
+                try
+                {
+                    rs = runQuery.dbController.getData(check_avail);
+                    int count = 0;
+                    while (rs.next()) {
+                        count++;
+                    }
+                    // check if user exists
+                    if(count>0) {
+                        activity.runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Toast.makeText(activity.getApplicationContext(),
+                                        "Error: username already taken. Please choose a different username",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        String query = String.format("insert into users values(\"%s\",\"%s\",\"%s\",%s,%s)",
+                                name,
+                                user,
+                                pass,
+                                country,
+                                language);
+                    }
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
@@ -237,16 +272,5 @@ public class LoginActivity extends AppCompatActivity
                 networkThread.execute(runQuery);
             }
         });
-
-//        Button signup = findViewById(R.id.btn_signup);
-//        signup.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 }

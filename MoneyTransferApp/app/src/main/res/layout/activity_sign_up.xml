@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#374048"
-        android:src="@drawable/monogram"
+        android:src="@mipmap/monogram"
         tools:layout_editor_absoluteX="-29dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -62,7 +62,7 @@
             android:id="@+id/editText6"
             android:layout_width="330dp"
             android:layout_height="37dp"
-            android:background="#2C2E35"
+            android:background="@drawable/edit_text_style"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textPassword"
