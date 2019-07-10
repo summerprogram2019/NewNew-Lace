@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="73dp"
         android:background="#22242B"
-        app:itemBackground="#22242B"
+        app:itemBackground="@color/bottomNavColor"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

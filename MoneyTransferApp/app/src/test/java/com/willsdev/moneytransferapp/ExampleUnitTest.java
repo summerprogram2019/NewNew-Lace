@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -79,7 +78,7 @@ public class ExampleUnitTest
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .build();
 
-        String currency = "USD";
+        String currency = "AUD";
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
@@ -103,7 +102,7 @@ public class ExampleUnitTest
         {
             String symbol = curr_symbols.get(e.getKey());
             if (symbol == null) symbol = e.getKey();
-            System.out.println(e.getKey() + " : " + symbol + df.format(e.getValue()));
+            System.out.println(e.getKey() + " : " + df.format(e.getValue()));
         }
 
         //MyCustomAdapter myCustomAdapter = new MyCustomAdapter(map, getApplicationContext());
@@ -124,6 +123,5 @@ public class ExampleUnitTest
         while (rs.next()) {
             System.out.println(rs.getString("name"));
         }
-
     }
 }

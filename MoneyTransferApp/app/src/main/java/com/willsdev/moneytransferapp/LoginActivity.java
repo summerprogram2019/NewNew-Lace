@@ -190,7 +190,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         String country = temp.get(ccode).name;
                         double amount = rs.getDouble("amount");
                         String symbol = curr_symbols.get(code);
-                        Wallet wallet = new Wallet(code,country,symbol,amount);
+                        Wallet wallet = new Wallet(code,country,symbol,amount,ccode);
                         wallets.add(wallet);
                     }
                     final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get().getApplicationContext());
@@ -217,10 +217,12 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
             }
             case TRANSFER:{
                 String user_id = (String) runQuery.data.get("user_id");
-                String from_act = (String) runQuery.data.get("initial_amt");
-                String to_act = (String) runQuery.data.get("final_amt");
-                int transfer_from = runQuery.dbController.update(String.format("UPDATE accounts set amount=%s where users_user_id=%s and currencies_currency_id=10",from_act,user_id));
-                int transfer_to = runQuery.dbController.update(String.format("UPDATE accounts set amount=%s where users_user_id=%s and currencies_currency_id=10",to_act,user_id));
+                String from_act = (String) runQuery.data.get("country_from");
+                String to_act = (String) runQuery.data.get("country_to");
+                double amount = (double) runQuery.data.get("amount");
+                double rate = (double) runQuery.data.get("rate");
+                int transfer_from = runQuery.dbController.update(String.format("UPDATE accounts set amount=amount-%s where users_user_id=%s and currencies_currency_id=%s",amount,user_id,from_act));
+                int transfer_to = runQuery.dbController.update(String.format("UPDATE accounts set amount=amount+%s where users_user_id=%s and currencies_currency_id=%s",amount*rate,user_id,to_act));
                 if(transfer_from+transfer_to!=2){
                     try
                     {

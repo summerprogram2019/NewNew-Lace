@@ -4,16 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenActivity">
-
-
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/bground"
-        tools:layout_editor_absoluteX="-76dp"
-        tools:layout_editor_absoluteY="410dp" />
+    tools:context=".SplashScreenActivity"
+    android:background="@mipmap/bground">
 
     <ImageView
         android:id="@+id/imageView"
