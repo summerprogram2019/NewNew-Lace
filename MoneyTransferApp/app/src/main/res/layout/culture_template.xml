@@ -36,9 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/culture_hidden"
-        android:visibility="gone"
-        android:animateLayoutChanges="true">
+        android:id="@+id/culture_hidden">
 
 
         <TextView
@@ -80,6 +78,28 @@
             android:textSize="12sp"
             android:textStyle="bold"
             android:paddingTop="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingBottom="10dp"
+            android:text="Tips"
+            android:textColor="@android:color/black"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/country_tips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto_regular"
+            android:textAlignment="textStart"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
 
 
     </LinearLayout>
