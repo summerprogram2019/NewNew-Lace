@@ -15,6 +15,19 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-85dp" />
 
+    <ProgressBar
+        android:id="@+id/signup_progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="100dp"
+        android:background="@color/white"/>
+
 
     <LinearLayout
         android:id="@+id/linearLayout"

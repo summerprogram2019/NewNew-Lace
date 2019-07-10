@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.ref.WeakReference;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ class Currency {
 }
 
 enum QueryType {
-    LOGIN,GET_WALLETS,TRANSFER,SIGNUP
+    LOGIN,GET_WALLETS,TRANSFER,SIGNUP,SETTINGS
 }
 
 /**
@@ -52,26 +54,34 @@ enum QueryType {
 class NetworkThread extends AsyncTask<RunQuery, String, Map>
 {
     private RunQuery runQuery;
-    private Activity activity;
+    private WeakReference<Activity> activity;
 
     NetworkThread(RunQuery runQuery, Activity activity){
         this.runQuery=runQuery;
-        this.activity = activity;
+        this.activity = new WeakReference<>(activity);
     }
 
     protected Map doInBackground(RunQuery... arg0) {
         Map map = null;
-        runQuery.dbController = ((MyApplication)activity.getApplication()).dbController;
+        runQuery.dbController = ((MyApplication)activity.get().getApplication()).dbController;
         if(runQuery.dbController==null) {
             String ip = "192.168.43.98:3306";
             String host = "jdbc:mysql://"+ip+"/app?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             String user = "app";
             String pass = "123123123App";
             runQuery.dbController = new DBController(host,user,pass);
-            ((MyApplication)activity.getApplication()).dbController = runQuery.dbController;
+            ((MyApplication)activity.get().getApplication()).dbController = runQuery.dbController;
         }
         switch (runQuery.queryType) {
             case LOGIN:{
+                activity.get().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        activity.get().findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
+                    }
+                });
                 String user = (String) runQuery.data.get("user");
                 String pass = (String) runQuery.data.get("pass");
                 String login_query = "select * from users where login=\""+user+"\" and password=\"" + pass + "\"";
@@ -85,28 +95,44 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         count++;
                     }
                     if(count>0){
-                        activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("user",user).apply();
-                        activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("pass",pass).apply();
-                        activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putInt("user_id",id).apply();
-                        Intent intent = new Intent(activity.getApplication().getApplicationContext(), MainActivity.class);
-                        activity.startActivity(intent);
+                        activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("user",user).apply();
+                        activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("pass",pass).apply();
+                        activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putInt("user_id",id).apply();
+                        Intent intent = new Intent(activity.get().getApplication().getApplicationContext(), MainActivity.class);
+                        activity.get().startActivity(intent);
                     }
                 } catch (Exception e)
                 {
-                    activity.runOnUiThread(new Runnable()
+                    activity.get().runOnUiThread(new Runnable()
                     {
                         @Override
                         public void run()
                         {
-                            Toast.makeText(activity.getApplicationContext(),"Login Failed. Please check your username and password",Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity.get().getApplicationContext(),"Login Failed. Please check your username and password",Toast.LENGTH_LONG).show();
                         }
                     });
                     e.printStackTrace();
                 }
+                activity.get().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        activity.get().findViewById(R.id.login_progress).setVisibility(View.INVISIBLE);
+                    }
+                });
                 break;
             }
             case GET_WALLETS:{
-                int user_id = activity.getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",0);
+                activity.get().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        activity.get().findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
+                    }
+                });
+                int user_id = activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",0);
                 try {
                     ResultSet currencies = runQuery.dbController.getData("select * from currencies");
                     Map<Integer, Currency> temp = new HashMap<>();
@@ -167,8 +193,8 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         Wallet wallet = new Wallet(code,country,symbol,amount);
                         wallets.add(wallet);
                     }
-                    final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.getApplicationContext());
-                    activity.runOnUiThread(new Runnable()
+                    final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get().getApplicationContext());
+                    activity.get().runOnUiThread(new Runnable()
                     {
                         @Override
                         public void run()
@@ -179,6 +205,14 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 } catch (Exception e){
                     e.printStackTrace();
                 }
+                activity.get().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        activity.get().findViewById(R.id.main_progress).setVisibility(View.INVISIBLE);
+                    }
+                });
                 break;
             }
             case TRANSFER:{
@@ -198,11 +232,20 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 }
                 break;
             }
-            case SIGNUP:{
+            case SIGNUP: {
+                activity.get().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        activity.get().findViewById(R.id.signup_progress).setVisibility(View.VISIBLE);
+                    }
+                });
                 Map<String, Object> data = runQuery.data;
                 String user = (String) data.get("user");
                 String pass = (String) data.get("pass");
                 String name = (String) data.get("name");
+                String pn = (String) data.get("pn");
                 String country = (String) data.get("country");
                 String language = (String) data.get("language");
                 ResultSet rs;
@@ -217,36 +260,88 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     }
                     // check if user exists
                     if(count>0) {
-                        activity.runOnUiThread(new Runnable()
+                        activity.get().runOnUiThread(new Runnable()
                         {
                             @Override
                             public void run()
                             {
-                                Toast.makeText(activity.getApplicationContext(),
+                                Toast.makeText(activity.get().getApplicationContext(),
                                         "Error: username already taken. Please choose a different username",
                                         Toast.LENGTH_LONG).show();
                             }
                         });
                     } else {
-                        String query = String.format("insert into users values(\"%s\",\"%s\",\"%s\",%s,%s)",
+                        // get country id and language id
+                        country = runQuery.dbController.getData("select * from countries where name=\""+country+"\"").getString("country_id");
+                        language = runQuery.dbController.getData("select *  from languages where name=\""+language+"\"").getString("language_id");
+                        String query = String.format("insert into users values(\"%s\",\"%s\",\"%s\",%s,%s,%s)",
                                 name,
                                 user,
                                 pass,
                                 country,
-                                language);
+                                language,
+                                pn);
+                        int status = runQuery.dbController.update(query);
+                        if(status==0) {
+                            activity.get().runOnUiThread(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    Toast.makeText(activity.get().getApplicationContext(),
+                                            "An error occured while creating your account. Try again later.",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            String login_query = "select * from users where login=\""+user+"\" and password=\"" + pass + "\"";
+                            ResultSet result = runQuery.dbController.getData(login_query);
+                            int id = 0;
+                            while (result.next()) {
+                                id = result.getInt("user_id");
+                            }
+                            activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("user",user).apply();
+                            activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putString("pass",pass).apply();
+                            activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).edit().putInt("user_id",id).apply();
+                            Intent intent = new Intent(activity.get().getApplication().getApplicationContext(), MainActivity.class);
+                            activity.get().startActivity(intent);
+                        }
                     }
                 } catch (SQLException e)
                 {
                     e.printStackTrace();
                 }
+                activity.get().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        activity.get().findViewById(R.id.signup_progress).setVisibility(View.INVISIBLE);
+                    }
+                });
                 break;
+            }
+            case SETTINGS:{
+                try
+                {
+                    int id = activity.get().getSharedPreferences("userdetails",Context.MODE_PRIVATE).getInt("user_id",-1);
+                    if(id==-1) {
+
+                    } else {
+                        ResultSet rs = runQuery.dbController.getData("select * from users where user_id="+id);
+                        String pn = rs.getString("phone_number");
+                    }
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
         return map;
     }
 }
 
-public class LoginActivity extends AppCompatActivity
+public class LoginActivity extends Activity
 {
 
     @Override

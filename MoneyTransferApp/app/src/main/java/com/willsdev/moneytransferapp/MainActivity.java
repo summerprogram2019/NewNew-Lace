@@ -1,6 +1,7 @@
 package com.willsdev.moneytransferapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import okhttp3.Call;
@@ -71,6 +74,15 @@ public class MainActivity extends AppCompatActivity
                         transferFragment.setArguments(bundle);
                         openFragment(transferFragment);
                     } else {
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
+                                bottomNavigationView.setEnabled(false);
+                            }
+                        });
                         final Map<String, String> curr_symbols;
                         String curr_symbols_json = "{" +
                                 "AUD: $" + "," +
@@ -154,14 +166,7 @@ public class MainActivity extends AppCompatActivity
                                     rates.add(temp);
                                 }
 
-                                runOnUiThread(new Runnable()
-                                {
-                                    @Override
-                                    public void run()
-                                    {
-                                        toolbar.setTitle("Rates");
-                                    }
-                                });
+
 
                                 RatesFragment transferFragment = new RatesFragment();
                                 Bundle bundle = new Bundle();
@@ -173,6 +178,16 @@ public class MainActivity extends AppCompatActivity
                             }
                         });
                     }
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            toolbar.setTitle("Rates");
+                            findViewById(R.id.main_progress).setVisibility(View.INVISIBLE);
+                            bottomNavigationView.setEnabled(true);
+                        }
+                    });
                     return true;
                 }
                 case R.id.navigation_culture: {
@@ -201,6 +216,11 @@ public class MainActivity extends AppCompatActivity
      */
     public static void toastMsg(Context context, String msg, int length) {
         Toast.makeText(context, msg, length).show();
+    }
+
+    public void settings_click(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override
