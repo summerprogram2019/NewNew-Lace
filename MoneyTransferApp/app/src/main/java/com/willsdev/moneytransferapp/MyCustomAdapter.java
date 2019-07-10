@@ -25,12 +25,14 @@ class Wallet {
     String country;
     String symbol;
     double balance;
+    int id;
 
-    public Wallet(String currency_code, String country, String symbol, double balance) {
+    public Wallet(String currency_code, String country, String symbol, double balance, int id) {
         this.currency_code = currency_code;
         this.country = country;
         this.symbol = symbol;
         this.balance = balance;
+        this.id=id;
     }
 }
 

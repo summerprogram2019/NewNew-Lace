@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -26,7 +30,14 @@ public class CultureFragment extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_culture, container, false);
+        View view = inflater.inflate(R.layout.fragment_culture, container, false);
+        ListView listView = view.findViewById(R.id.culture_scroll);
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("cultures_listview",listView);
+        NetworkThread networkThread = new NetworkThread(new RunQuery(null,QueryType.CULTURES,data),getActivity());
+        networkThread.execute();
+        return view;
     }
 
 }

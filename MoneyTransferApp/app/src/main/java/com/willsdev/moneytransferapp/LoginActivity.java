@@ -1,19 +1,14 @@
 package com.willsdev.moneytransferapp;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -45,7 +40,7 @@ class Currency {
 }
 
 enum QueryType {
-    LOGIN,GET_WALLETS,TRANSFER,SIGNUP,SETTINGS
+    LOGIN,GET_WALLETS,TRANSFER,SIGNUP,SETTINGS,RATES,CULTURES
 }
 
 /**
@@ -72,6 +67,41 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
             runQuery.dbController = new DBController(host,user,pass);
             ((MyApplication)activity.get().getApplication()).dbController = runQuery.dbController;
         }
+        final String s = "{" +
+                "AUD: $" + "," +
+                "BGN: лв" + "," +
+                "BRL: R$" + "," +
+                "CAD: $" + "," +
+                "CHF: CHF" + "," +
+                "CNY: ¥" + "," +
+                "CZK: Kč" + "," +
+                "DKK: kr" + "," +
+                "EUR: €" + "," +
+                "GBP: £" + "," +
+                "HKD: $" + "," +
+                "HRK: kn" + "," +
+                "HUF: ft" + "," +
+                "IDR: Rp" + "," +
+                "ILS: ₪" + "," +
+                "INR: R" + "," +
+                "ISK: kr" + "," +
+                "JPY: ¥" + "," +
+                "KRW: ₩" + "," +
+                "MXN: $" + "," +
+                "MYR: RM" + "," +
+                "NOK: kr" + "," +
+                "NZD: $" + "," +
+                "PHP: ₱" + "," +
+                "PLN: zł" + "," +
+                "RON: lei" + "," +
+                "RUB: \u20BD" + "," +
+                "SEK: kr" + "," +
+                "SGD: $" + "," +
+                "THB: ฿" + "," +
+                "TRY: TRY" + "," +
+                "USD: $" + "," +
+                "ZAR: R" +
+                "}";
         switch (runQuery.queryType) {
             case LOGIN:{
                 activity.get().runOnUiThread(new Runnable()
@@ -146,41 +176,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     List<Wallet> wallets = new ArrayList<>();
 
                     final Map<String, String> curr_symbols;
-                    String curr_symbols_json = "{" +
-                            "AUD: $" + "," +
-                            "BGN: лв" + "," +
-                            "BRL: R$" + "," +
-                            "CAD: $" + "," +
-                            "CHF: CHF" + "," +
-                            "CNY: ¥" + "," +
-                            "CZK: Kč" + "," +
-                            "DKK: kr" + "," +
-                            "EUR: €" + "," +
-                            "GBP: £" + "," +
-                            "HKD: $" + "," +
-                            "HRK: kn" + "," +
-                            "HUF: ft" + "," +
-                            "IDR: Rp" + "," +
-                            "ILS: ₪" + "," +
-                            "INR: R" + "," +
-                            "ISK: kr" + "," +
-                            "JPY: ¥" + "," +
-                            "KRW: ₩" + "," +
-                            "MXN: $" + "," +
-                            "MYR: RM" + "," +
-                            "NOK: kr" + "," +
-                            "NZD: $" + "," +
-                            "PHP: ₱" + "," +
-                            "PLN: zł" + "," +
-                            "RON: lei" + "," +
-                            "RUB: \u20BD" + "," +
-                            "SEK: kr" + "," +
-                            "SGD: $" + "," +
-                            "THB: ฿" + "," +
-                            "TRY: TRY" + "," +
-                            "USD: $" + "," +
-                            "ZAR: R" +
-                            "}";
+                    String curr_symbols_json = s;
 
                     curr_symbols = new Gson().fromJson(curr_symbols_json, new TypeToken<HashMap<String, String>>() {}.getType());
 
@@ -190,7 +186,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         String country = temp.get(ccode).name;
                         double amount = rs.getDouble("amount");
                         String symbol = curr_symbols.get(code);
-                        Wallet wallet = new Wallet(code,country,symbol,amount);
+                        Wallet wallet = new Wallet(code,country,symbol,amount,ccode);
                         wallets.add(wallet);
                     }
                     final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get().getApplicationContext());
@@ -217,10 +213,12 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
             }
             case TRANSFER:{
                 String user_id = (String) runQuery.data.get("user_id");
-                String from_act = (String) runQuery.data.get("initial_amt");
-                String to_act = (String) runQuery.data.get("final_amt");
-                int transfer_from = runQuery.dbController.update(String.format("UPDATE accounts set amount=%s where users_user_id=%s and currencies_currency_id=10",from_act,user_id));
-                int transfer_to = runQuery.dbController.update(String.format("UPDATE accounts set amount=%s where users_user_id=%s and currencies_currency_id=10",to_act,user_id));
+                String from_act = (String) runQuery.data.get("country_from");
+                String to_act = (String) runQuery.data.get("country_to");
+                double amount = (double) runQuery.data.get("amount");
+                double rate = (double) runQuery.data.get("rate");
+                int transfer_from = runQuery.dbController.update(String.format("UPDATE accounts set amount=amount-%s where users_user_id=%s and currencies_currency_id=%s",amount,user_id,from_act));
+                int transfer_to = runQuery.dbController.update(String.format("UPDATE accounts set amount=amount+%s where users_user_id=%s and currencies_currency_id=%s",amount*rate,user_id,to_act));
                 if(transfer_from+transfer_to!=2){
                     try
                     {
@@ -335,6 +333,75 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 {
                     e.printStackTrace();
                 }
+                break;
+            }
+            case RATES: {
+                try
+                {
+                    ResultSet rs = runQuery.dbController.getData("select * from currencies");
+                    List<Rate> rates = new ArrayList<>();
+
+                    final Map<String, String> curr_symbols;
+
+                    curr_symbols = new Gson().fromJson(s, new TypeToken<HashMap<String, String>>() {}.getType());
+
+                    while (rs.next()) {
+                        float r = rs.getFloat("rate");
+                        String ccode = rs.getString("code");
+                        String symbol = curr_symbols.get(ccode);
+                        String name = rs.getString("name");
+                        rates.add(new Rate(r,ccode,symbol,name));
+                    }
+
+                    final RateListAdapter rateListAdapter = new RateListAdapter(rates,activity.get().getApplicationContext());
+                    activity.get().runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            ((ListView)runQuery.data.get("rate_listview")).setAdapter(rateListAdapter);
+                        }
+                    });
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
+            case CULTURES: {
+                try {
+                    Map<Integer,String> codes = new HashMap<>();
+                    ResultSet code_get = runQuery.dbController.getData("select * from currencies");
+                    while (code_get.next()) {
+                        codes.put(code_get.getInt("currency_id"),code_get.getString("code"));
+                    }
+
+                    ResultSet rs = runQuery.dbController.getData("select * from countries");
+                    List<Culture> cultures = new ArrayList<>();
+
+                    while (rs.next()){
+                        String name = rs.getString("name");
+                        String fin = rs.getString("general_info");
+                        String taboos = rs.getString("taboos");
+                        String ccode = codes.get(rs.getInt("currencies_currency_id"));
+                        Culture culture = new Culture(name,ccode,taboos,fin);
+                        cultures.add(culture);
+                    }
+
+                    final CultureListAdapter cultureListAdapter = new CultureListAdapter(cultures,activity.get().getApplicationContext());
+                    activity.get().runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            ((ListView)runQuery.data.get("cultures_listview")).setAdapter(cultureListAdapter);
+                        }
+                    });
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
             }
         }
         return map;
