@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="white">#FFFFFF</color>
     <color name="editTextWhite">#DCDCDC</color>
+    <color name="bottomNavColor">#22242B</color>
 </resources>
