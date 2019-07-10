@@ -13,8 +13,8 @@
         android:layout_height="match_parent"
         android:background="#374048"
         android:src="@mipmap/monogram"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteX="167dp"
+        tools:layout_editor_absoluteY="-458dp" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -59,7 +59,8 @@
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
         android:textAlignment="viewStart"
-        android:textColor="#727F89"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#727F89"
         app:layout_constraintBottom_toTopOf="@+id/login_pass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
@@ -78,7 +79,8 @@
         android:hint="password"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
-        android:textColor="#727F89"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#727F89"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
