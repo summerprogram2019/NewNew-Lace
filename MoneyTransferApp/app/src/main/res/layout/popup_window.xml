@@ -44,7 +44,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/darkScale"
-            android:inputType="numberDecimal" />
+            android:fontFamily="@font/poppins_regular"
+            android:hint="enter amount"
+            android:inputType="numberDecimal"
+            android:paddingLeft="5dp"
+            android:textColorHint="@color/greyScale"
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +71,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/darkScale"
-            android:inputType="numberDecimal" />
+            android:fontFamily="@font/poppins_regular"
+            android:hint="enter amount"
+            android:inputType="numberDecimal"
+            android:paddingLeft="5dp"
+            android:textColorHint="@color/greyScale"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,7 +101,7 @@
                 android:layout_weight="1"
                 android:padding="1dp"
                 android:textColor="@color/EzzyBillsGray"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
