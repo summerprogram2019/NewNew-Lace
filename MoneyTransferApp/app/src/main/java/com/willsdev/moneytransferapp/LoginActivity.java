@@ -218,6 +218,8 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 int user_id = activity.get().getSharedPreferences("userdetails",Context.MODE_PRIVATE).getInt("user_id",-1);
                 String from_act = (String) runQuery.data.get("country_from");
                 String to_act = (String) runQuery.data.get("country_to");
+                double from_amt = (double) runQuery.data.get("from_amt");
+                double to_amt = (double) runQuery.data.get("to_amt");
 
                 try {
                     Map<String,Integer> currencies = new HashMap<>();
@@ -225,10 +227,9 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     while (rs.next()) {
                         currencies.put(rs.getString("code"),rs.getInt("currency_id"));
                     }
-                    double amount = (double) runQuery.data.get("amount");
                     double rate = (double) runQuery.data.get("rate");
-                    runQuery.dbController.update(String.format("update accounts set amount=amount-%s where users_user_id=%s and currencies_currency_id=%s",amount,user_id,currencies.get(from_act)));
-                    runQuery.dbController.update(String.format("update accounts set amount=amount+%s where users_user_id=%s and currencies_currency_id=%s",amount*rate,user_id,currencies.get(to_act)));
+                    runQuery.dbController.update(String.format("update accounts set amount=amount-%s where users_user_id=%s and currencies_currency_id=%s",from_amt,user_id,currencies.get(from_act)));
+                    runQuery.dbController.update(String.format("update accounts set amount=amount+%s where users_user_id=%s and currencies_currency_id=%s",to_amt,user_id,currencies.get(to_act)));
 
                 } catch ( Exception e) {
                     e.printStackTrace();
@@ -453,7 +454,8 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     if(status==0) {
                         //bad
                     } else {
-
+                        Intent intent = new Intent(activity.get().getApplication().getApplicationContext(), MainActivity.class);
+                        activity.get().getApplicationContext().startActivity(intent);
                     }
                 } catch (SQLException e)
                 {

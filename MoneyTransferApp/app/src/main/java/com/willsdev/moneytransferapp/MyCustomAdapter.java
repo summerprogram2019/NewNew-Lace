@@ -131,6 +131,8 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                 final Spinner to_spinner = popupView.findViewById(R.id.popup_transfer_to_spinner);
                 final TextView rate = popupView.findViewById(R.id.popup_transfer_rate);
 
+                final double commision = 0.97;
+
                 from_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                 {
                     @Override
@@ -139,7 +141,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
                         float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
                         double convert;
-                        double commision = 0.97;
                         try {
                             convert = Double.parseDouble(from_amt.getText().toString());
                         } catch (Exception e) {
@@ -165,7 +166,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
                         float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
                         double convert;
-                        double commision = 0.97;
                         try {
                             convert = Double.parseDouble(from_amt.getText().toString());
                         } catch (Exception e) {
@@ -203,7 +203,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
                         float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
                         double convert;
-                        double commision = 0.97;
                         try {
                             convert = Double.parseDouble(from_amt.getText().toString());
                         } catch (Exception e) {
@@ -242,7 +241,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
                         float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
                         double convert;
-                        double commision = 0.97;
                         try {
                             convert = Double.parseDouble(from_amt.getText().toString());
                         } catch (Exception e) {
@@ -253,12 +251,15 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         Map<String,Object> data = new HashMap<>();
                         data.put("country_from",from_spinner.getSelectedItem().toString());
                         data.put("country_to",to_spinner.getSelectedItem().toString());
-                        data.put("amount",Double.parseDouble(from_amt.getText().toString()));
+                        data.put("from_amt",Double.parseDouble(from_amt.getText().toString()));
+                        data.put("to_amt",Double.parseDouble(to_amt.getText().toString()));
                         data.put("rate",convert*(to_rate_amt/from_rate_amt)*commision);
                         RunQuery runQuery = new RunQuery(null,QueryType.TRANSFER,data);
                         NetworkThread networkThread1 = new NetworkThread(runQuery,activity);
                         networkThread1.execute();
                         mPopupWindow[0].dismiss();
+                        Intent intent = new Intent(activity.getApplication().getApplicationContext(), MainActivity.class);
+                        activity.getApplicationContext().startActivity(intent);
                     }
                 });
 
