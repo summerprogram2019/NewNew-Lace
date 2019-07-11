@@ -157,14 +157,6 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 break;
             }
             case GET_WALLETS:{
-                activity.get().runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        activity.get().findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
-                    }
-                });
                 boolean popup = (boolean) runQuery.data.get("popup");
                 int user_id = activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",0);
                 try {
@@ -194,12 +186,20 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         temp_s.add(code);
                     }
                     if (popup) {
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, temp_s);
-                        ((Spinner)runQuery.data.get("to_spinner")).setAdapter(adapter);
-                        ((Spinner)runQuery.data.get("from_spinner")).setAdapter(adapter);
+                        final ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, temp_s);
+                        activity.get().runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                ((Spinner)runQuery.data.get("to_spinner")).setAdapter(adapter);
+                                ((Spinner)runQuery.data.get("from_spinner")).setAdapter(adapter);
+                            }
+                        });
+
                     } else {
 
-                        final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get().getApplicationContext());
+                        final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get());
                         activity.get().runOnUiThread(new Runnable()
                         {
                             @Override
@@ -212,33 +212,29 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                activity.get().runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        activity.get().findViewById(R.id.main_progress).setVisibility(View.INVISIBLE);
-                    }
-                });
                 break;
             }
             case TRANSFER:{
-                String user_id = (String) runQuery.data.get("user_id");
+                int user_id = activity.get().getSharedPreferences("userdetails",Context.MODE_PRIVATE).getInt("user_id",-1);
                 String from_act = (String) runQuery.data.get("country_from");
                 String to_act = (String) runQuery.data.get("country_to");
-                double amount = (double) runQuery.data.get("amount");
-                double rate = (double) runQuery.data.get("rate");
-                int transfer_from = runQuery.dbController.update(String.format("UPDATE accounts set amount=amount-%s where users_user_id=%s and currencies_currency_id=%s",amount,user_id,from_act));
-                int transfer_to = runQuery.dbController.update(String.format("UPDATE accounts set amount=amount+%s where users_user_id=%s and currencies_currency_id=%s",amount*rate,user_id,to_act));
-                if(transfer_from+transfer_to!=2){
-                    try
-                    {
-                        throw new Exception("Transfer failed");
-                    } catch (Exception e)
-                    {
-                        e.printStackTrace();
+
+                try {
+                    Map<String,Integer> currencies = new HashMap<>();
+                    ResultSet rs = runQuery.dbController.getData("select * from currencies");
+                    while (rs.next()) {
+                        currencies.put(rs.getString("code"),rs.getInt("currency_id"));
                     }
+                    double amount = (double) runQuery.data.get("amount");
+                    double rate = (double) runQuery.data.get("rate");
+                    runQuery.dbController.update(String.format("update accounts set amount=amount-%s where users_user_id=%s and currencies_currency_id=%s",amount,user_id,currencies.get(from_act)));
+                    runQuery.dbController.update(String.format("update accounts set amount=amount+%s where users_user_id=%s and currencies_currency_id=%s",amount*rate,user_id,currencies.get(to_act)));
+
+                } catch ( Exception e) {
+                    e.printStackTrace();
                 }
+
+
                 break;
             }
             case SIGNUP: {

@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,14 +55,14 @@ class Wallet {
 
 public class MyCustomAdapter extends BaseAdapter implements ListAdapter
 {
-    private Context context;
+    private Activity activity;
     private List<Wallet> list;
     DecimalFormat df = new DecimalFormat("0.00");
 
-    public MyCustomAdapter(List<Wallet> list, Context context)
+    public MyCustomAdapter(List<Wallet> list, Activity activity)
     {
         this.list = list;
-        this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
         View view = convertView;
         if (view == null)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) activity.getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_template, null);
         }
 
@@ -100,40 +103,41 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
         country_name.setText(curr_wallet.country);
 
         ImageView flag_img = view.findViewById(R.id.wallet_country_flag);
-        flag_img.setImageDrawable(getFlagResource(curr_wallet.currency_code, context));
+        flag_img.setImageDrawable(getFlagResource(curr_wallet.currency_code, activity.getApplicationContext()));
 
         final PopupWindow[] mPopupWindow = new PopupWindow[1];
 
-        LinearLayout container = view.findViewById(R.id.wallet_container);
+        final LinearLayout container = view.findViewById(R.id.wallet_container);
         container.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = activity.getLayoutInflater();
                 View popupView = inflater.inflate(R.layout.popup_window, null);
-                popupView.setClipToOutline(true);
+
 
                 mPopupWindow[0] = new PopupWindow(
                         popupView,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
-                mPopupWindow[0].setElevation(5.0f);
+                mPopupWindow[0].setElevation(100.0f);
 
                 // Set up textboxes and spinners
                 final EditText from_amt = popupView.findViewById(R.id.popup_transfer_from_amount);
                 final EditText to_amt = popupView.findViewById(R.id.popup_transfer_to_amount);
-                Spinner from_spinner = popupView.findViewById(R.id.popup_transfer_from_spinner);
+                final Spinner from_spinner = popupView.findViewById(R.id.popup_transfer_from_spinner);
                 final Spinner to_spinner = popupView.findViewById(R.id.popup_transfer_to_spinner);
                 final TextView rate = popupView.findViewById(R.id.popup_transfer_rate);
 
-                to_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                from_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                 {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                     {
-                        float rate_amt = ((MyApplication)context).rates.get(to_spinner.getSelectedItem().toString()).rate;
+                        float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
+                        float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
                         double convert;
                         double commision = 0.97;
                         try {
@@ -142,8 +146,8 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                             //NAN
                             convert = 0;
                         }
-                        to_amt.setText(convert*rate_amt*commision+"");
-                        rate.setText(rate_amt+"");
+                        to_amt.setText(convert*(to_rate_amt/from_rate_amt)*commision+"");
+                        rate.setText(to_rate_amt/from_rate_amt+"");
                     }
 
                     @Override
@@ -153,12 +157,70 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                     }
                 });
 
+                to_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                    {
+                        float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
+                        float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
+                        double convert;
+                        double commision = 0.97;
+                        try {
+                            convert = Double.parseDouble(from_amt.getText().toString());
+                        } catch (Exception e) {
+                            //NAN
+                            convert = 0;
+                        }
+                        to_amt.setText(convert*(to_rate_amt/from_rate_amt)*commision+"");
+                        rate.setText(to_rate_amt/from_rate_amt+"");
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent)
+                    {
+
+                    }
+                });
+
+                from_amt.addTextChangedListener(new TextWatcher()
+                {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                    {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count)
+                    {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s)
+                    {
+                        float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
+                        float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
+                        double convert;
+                        double commision = 0.97;
+                        try {
+                            convert = Double.parseDouble(from_amt.getText().toString());
+                        } catch (Exception e) {
+                            //NAN
+                            convert = 0;
+                        }
+                        to_amt.setText(convert*(to_rate_amt/from_rate_amt)*commision+"");
+                        rate.setText(to_rate_amt/from_rate_amt+"");
+                    }
+                });
+
                 Map<String,Object> data = new HashMap<>();
                 data.put("from_spinner",from_spinner);
                 data.put("to_spinner",to_spinner);
                 data.put("popup",true);
                 RunQuery r = new RunQuery(null,QueryType.GET_WALLETS,data);
-                NetworkThread networkThread = new NetworkThread(r,(MainActivity)context);
+                NetworkThread networkThread = new NetworkThread(r,activity);
                 networkThread.execute();
 
                 // Set up buttons
@@ -177,9 +239,32 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                     @Override
                     public void onClick(View v)
                     {
+                        float from_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(from_spinner.getSelectedItem().toString()).rate;
+                        float to_rate_amt = ((MyApplication)activity.getApplicationContext()).rates.get(to_spinner.getSelectedItem().toString()).rate;
+                        double convert;
+                        double commision = 0.97;
+                        try {
+                            convert = Double.parseDouble(from_amt.getText().toString());
+                        } catch (Exception e) {
+                            //NAN
+                            convert = 0;
+                        }
 
+                        Map<String,Object> data = new HashMap<>();
+                        data.put("country_from",from_spinner.getSelectedItem().toString());
+                        data.put("country_to",to_spinner.getSelectedItem().toString());
+                        data.put("amount",Double.parseDouble(from_amt.getText().toString()));
+                        data.put("rate",convert*(to_rate_amt/from_rate_amt)*commision);
+                        RunQuery runQuery = new RunQuery(null,QueryType.TRANSFER,data);
+                        NetworkThread networkThread1 = new NetworkThread(runQuery,activity);
+                        networkThread1.execute();
+                        mPopupWindow[0].dismiss();
                     }
                 });
+
+                mPopupWindow[0].setFocusable(true);
+                //mPopupWindow[0].update();
+                mPopupWindow[0].showAtLocation(container, Gravity.CENTER, 0, 0);
             }
         });
 

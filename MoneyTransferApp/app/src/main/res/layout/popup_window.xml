@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="13dp">
+        android:padding="13dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_style"
-            android:id="@+id/popup_transfer_from_amount"/>
+            android:id="@+id/popup_transfer_from_amount"
+            android:inputType="numberDecimal"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_style"
-            android:id="@+id/popup_transfer_to_amount"/>
+            android:id="@+id/popup_transfer_to_amount"
+            android:inputType="numberDecimal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,7 +112,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_style"
             android:text="Cancel"
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="#ff0000"
             android:id="@+id/popup_transfer_cancel"/>
 
         <Button
