@@ -30,7 +30,7 @@
             android:layout_centerInParent="true"
             android:padding="1dp"
             android:text="From"
-            android:textColor="@color/goldenThreads"
+            android:textColor="@color/greyScale"
             android:textSize="22sp" />
 
         <Spinner
@@ -52,7 +52,7 @@
             android:layout_centerInParent="true"
             android:padding="1dp"
             android:text="To"
-            android:textColor="@color/goldenThreads"
+            android:textColor="@color/greyScale"
             android:textSize="22sp" />
 
         <Spinner
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:padding="1dp"
                 android:text="Rate:"
-                android:textColor="@color/goldenThreads"
+                android:textColor="@color/greyScale"
                 android:textSize="22sp" />
 
             <TextView
