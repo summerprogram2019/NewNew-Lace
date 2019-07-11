@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RatesFragment">
+    tools:context=".RatesFragment"
+    android:background="@color/mainColour">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
-        android:id="@+id/rate_scroll"/>
+        android:id="@+id/rate_scroll"
+        android:layout_margin="10dp"/>
 
 </FrameLayout>
