@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#242a30</color>
+    <color name="colorPrimaryDark">#111111</color>
+    <color name="colorPrimaryLight">#484848</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#fff</color>
     <color name="editTextWhite">#DCDCDC</color>
-    <color name="bottomNavColor">#22242B</color>
+    <color name="bottomNavColor">#001064</color>
     <color name="mainColour">#374048</color>
     <color name="goldenThreads">#EED558</color>
     <color name="greyScale">#727F89</color>
+    <color name="darkScale">#2C2E35</color>
+    <color name="btn">#00CCFF</color>
     <color name="EzzybillsBlue">#25a0da</color>
     <color name="EzzyBillsGray">#666666</color>
     <color name="btnPressed">#C9C9C9</color>

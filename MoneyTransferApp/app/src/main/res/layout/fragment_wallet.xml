@@ -15,7 +15,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:id="@+id/wallet_scroll"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         />
 
     <Button
@@ -23,8 +23,12 @@
         android:layout_height="0dp"
         android:layout_marginBottom="50dp"
         android:layout_weight="1"
-        android:backgroundTint="#00CCFF"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_regular"
+        android:backgroundTint="@color/btn"
         android:text="Add Wallet"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textColor="@color/white"/>
 
 

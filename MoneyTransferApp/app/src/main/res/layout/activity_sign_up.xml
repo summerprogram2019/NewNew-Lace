@@ -62,7 +62,7 @@
             android:id="@+id/signup_username"
             android:layout_width="330dp"
             android:layout_height="37dp"
-            android:background="@drawable/edit_text_style"
+            android:background="@color/darkScale"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textPersonName"
