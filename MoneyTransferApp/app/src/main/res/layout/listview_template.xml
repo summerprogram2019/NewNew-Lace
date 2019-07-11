@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/wallet_container"
-    android:background="@color/white"
+    android:background="@drawable/rounded_corner"
     android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="1dp"
-        android:background="@color/darkScale"
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
@@ -65,7 +64,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_light"
-                android:textAlignment="textStart"
+                android:textAlignment="textEnd"
                 android:textColor="@color/goldenThreads"
                 android:textSize="30sp" />
         </LinearLayout>
@@ -82,7 +81,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="Current Rate:"
                 android:textAlignment="viewStart"
-                android:textColor="@color/greyScale"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
             <TextView
@@ -98,12 +97,5 @@
 
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/mainColour">
-    </LinearLayout>
-
 
 </LinearLayout>

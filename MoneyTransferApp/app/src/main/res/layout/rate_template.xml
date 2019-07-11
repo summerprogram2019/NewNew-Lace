@@ -14,9 +14,10 @@
         <ImageView
             android:id="@+id/rate_flag"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.8" />
-
+            android:layout_height="35dp"
+            android:layout_weight="0.8"
+            android:paddingVertical="2dp"
+            />
         <TextView
             android:id="@+id/rate_country_name"
             android:layout_width="0dp"

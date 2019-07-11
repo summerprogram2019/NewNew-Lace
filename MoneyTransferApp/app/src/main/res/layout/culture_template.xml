@@ -49,8 +49,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/raleway_regular"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="Payment Options"
             android:background="@color/white"
             android:textColor="@android:color/black"
@@ -63,11 +64,9 @@
             android:fontFamily="@font/roboto_regular"
             android:textAlignment="textStart"
             android:textColor="#000000"
-            android:paddingLeft="10dp"
+            android:padding="15dp"
             android:background="@color/white"
             android:textSize="12sp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -78,10 +77,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/raleway_regular"
-            android:paddingBottom="10dp"
             android:text="Country Taboos"
             android:background="@color/white"
-            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:textColor="@android:color/black"
             android:textSize="25dp" />
 
