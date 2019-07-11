@@ -112,9 +112,9 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="0.5dp"
             android:layout_weight="1"
-            android:background="#ff0000"
+            android:background="@drawable/btn_style"
             android:text="Cancel"
-            android:textColor="@color/white" />
+            android:textColor="#ff0000" />
 
         <Button
             android:id="@+id/popup_transfer_confirm"
