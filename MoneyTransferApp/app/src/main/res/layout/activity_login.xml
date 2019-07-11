@@ -88,23 +88,19 @@
 
     <Button
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="108dp"
-        android:layout_height="14dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="142dp"
+        android:layout_height="17dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="24dp"
         android:background="#374048"
         android:fontFamily="@font/poppins_regular"
         android:text="Forgot Password?"
-        android:textAlignment="textEnd"
+        android:textAlignment="textStart"
         android:textColor="#727F89"
-        android:textSize="10dp"
+        android:textSize="13dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_login1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/background"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_pass"
         app:layout_constraintVertical_bias="0.0" />
 

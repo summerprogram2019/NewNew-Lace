@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_light"
                 android:text="Balance:"
-                android:textAlignment="textStart"
+                android:textAlignment="viewStart"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
 
@@ -61,7 +61,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_light"
-                android:textAlignment="textEnd"
+                android:textAlignment="viewStart"
                 android:textColor="@color/goldenThreads"
                 android:textSize="30sp" />
         </LinearLayout>
@@ -73,9 +73,9 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Current Rate:"
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
@@ -88,8 +88,9 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono_light"
                 android:textAlignment="textStart"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp" />
+                android:textColor="@color/goldenThreads"
+                android:textSize="20sp"
+                tools:textAlignment="viewStart" />
         </LinearLayout>
 
 
