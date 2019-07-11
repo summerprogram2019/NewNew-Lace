@@ -9,4 +9,5 @@
     <color name="mainColour">#374048</color>
     <color name="goldenThreads">#EED558</color>
     <color name="greyScale">#727F89</color>
+    <color name="darkScale">#2C2E35</color>
 </resources>
