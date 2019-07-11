@@ -94,10 +94,8 @@
             android:textColor="#000000"
             android:textSize="12sp"
             android:background="@color/white"
-            android:paddingLeft="10dp"
+            android:padding="15dp"
             android:textStyle="bold"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             />
 
 
