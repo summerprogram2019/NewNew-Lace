@@ -4,24 +4,23 @@
     android:id="@+id/popupLayout"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_bg"
-    android:orientation="vertical"
-    >
+    android:background="#22242B"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="13dp"
         android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp">
+        android:layout_marginEnd="50dp"
+        android:orientation="vertical"
+        android:padding="13dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="Transfer"
-            android:textColor="@android:color/background_dark"
+            android:textColor="@color/goldenThreads"
             android:textSize="30sp" />
 
 
@@ -31,20 +30,21 @@
             android:layout_centerInParent="true"
             android:padding="1dp"
             android:text="From"
-            android:textColor="@color/EzzyBillsGray"
+            android:textColor="@color/goldenThreads"
             android:textSize="22sp" />
 
         <Spinner
+            android:id="@+id/popup_transfer_from_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/popup_transfer_from_spinner"/>
+            android:backgroundTint="@color/greyScale" />
 
         <EditText
+            android:id="@+id/popup_transfer_from_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_style"
-            android:id="@+id/popup_transfer_from_amount"
-            android:inputType="numberDecimal"/>
+            android:background="@color/darkScale"
+            android:inputType="numberDecimal" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,20 +52,21 @@
             android:layout_centerInParent="true"
             android:padding="1dp"
             android:text="To"
-            android:textColor="@color/EzzyBillsGray"
+            android:textColor="@color/goldenThreads"
             android:textSize="22sp" />
 
         <Spinner
+            android:id="@+id/popup_transfer_to_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/popup_transfer_to_spinner"/>
+            android:backgroundTint="@color/greyScale" />
 
         <EditText
+            android:id="@+id/popup_transfer_to_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_style"
-            android:id="@+id/popup_transfer_to_amount"
-            android:inputType="numberDecimal"/>
+            android:background="@color/darkScale"
+            android:inputType="numberDecimal" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,23 +75,23 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:text="Rate:"
-                android:textColor="@color/EzzyBillsGray"
+                android:textColor="@color/goldenThreads"
                 android:textSize="22sp" />
 
             <TextView
+                android:id="@+id/popup_transfer_rate"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:textColor="@color/EzzyBillsGray"
-                android:textSize="22sp"
-                android:id="@+id/popup_transfer_rate"/>
+                android:textSize="22sp" />
 
         </LinearLayout>
 
@@ -105,26 +106,27 @@
         android:paddingTop="1dp">
 
         <Button
+            android:id="@+id/popup_transfer_cancel"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="0.5dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_style"
+            android:background="#ff0000"
             android:text="Cancel"
-            android:textColor="#ff0000"
-            android:id="@+id/popup_transfer_cancel"/>
+            android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/popup_transfer_confirm"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_style"
+            android:background="@color/btn"
+            android:fontFamily="@font/poppins_regular"
             android:text="Confirm"
-            android:textColor="@color/EzzybillsBlue"
-            android:id="@+id/popup_transfer_confirm"/>
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

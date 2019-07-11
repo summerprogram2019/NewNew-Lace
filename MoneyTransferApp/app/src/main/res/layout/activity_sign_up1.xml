@@ -12,8 +12,8 @@
         android:layout_height="match_parent"
         android:background="#374048"
         android:src="@mipmap/monogram"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-85dp" />
+        tools:layout_editor_absoluteX="-660dp"
+        tools:layout_editor_absoluteY="-318dp" />
 
     <ProgressBar
         android:id="@+id/signup_progress"
