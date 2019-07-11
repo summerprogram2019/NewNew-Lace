@@ -4,7 +4,6 @@
     android:id="@+id/popupLayout"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="#22242B"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
+        android:background="@color/mainColour"
         android:orientation="vertical"
         android:padding="13dp">
 
@@ -43,13 +43,13 @@
             android:id="@+id/popup_transfer_from_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/darkScale"
+            android:background="#2C2E35"
             android:fontFamily="@font/poppins_regular"
             android:hint="enter amount"
             android:inputType="numberDecimal"
             android:paddingLeft="5dp"
             android:textColorHint="@color/greyScale"
-            android:textSize="15sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
             android:inputType="numberDecimal"
             android:paddingLeft="5dp"
             android:textColorHint="@color/greyScale"
-            android:textSize="15sp" />
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
