@@ -434,6 +434,12 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     currency_id = runQuery.dbController.getData("select currency_id from currencies where code=\""+ccode+"\"").getInt("currency_id");
                     int user_id = activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",-1);
                     String query = String.format("insert into accounts values(%s,%s,%s)",0,user_id,currency_id);
+                    int status = runQuery.dbController.update(query);
+                    if(status==0) {
+                        //bad
+                    } else {
+
+                    }
                 } catch (SQLException e)
                 {
                     e.printStackTrace();
