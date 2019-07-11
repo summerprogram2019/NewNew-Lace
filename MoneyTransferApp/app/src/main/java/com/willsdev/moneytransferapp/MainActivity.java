@@ -19,7 +19,9 @@ import android.view.MenuItem;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -87,7 +89,11 @@ public class MainActivity extends AppCompatActivity
         /* Set a listener that will be notified when a bottom navigation item is selected. */
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-
+        /* save rates */
+        Map<String,Object> data = new HashMap<>();
+        data.put("popup",true);
+        NetworkThread networkThread = new NetworkThread(new RunQuery(null,QueryType.RATES,data),this);
+        networkThread.execute();
 
         /* Start With Wallets */
         toolbar.setTitle("Wallet");

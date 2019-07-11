@@ -35,6 +35,7 @@ public class WalletFragment extends Fragment
 
         Map<String,Object> data = new HashMap<>();
         data.put("wallet_listview",listView);
+        data.put("popup",false);
         NetworkThread networkThread = new NetworkThread(new RunQuery(null,QueryType.GET_WALLETS,data),getActivity());
         networkThread.execute();
 

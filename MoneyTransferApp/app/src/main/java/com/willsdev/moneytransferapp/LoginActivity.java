@@ -165,6 +165,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         activity.get().findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
                     }
                 });
+                boolean popup = (boolean) runQuery.data.get("popup");
                 int user_id = activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",0);
                 try {
                     ResultSet currencies = runQuery.dbController.getData("select * from currencies");
@@ -177,11 +178,10 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     }
                     ResultSet rs = runQuery.dbController.getData("select * from accounts where users_user_id="+user_id);
                     List<Wallet> wallets = new ArrayList<>();
-
                     final Map<String, String> curr_symbols;
-                    String curr_symbols_json = s;
 
-                    curr_symbols = new Gson().fromJson(curr_symbols_json, new TypeToken<HashMap<String, String>>() {}.getType());
+                    curr_symbols = new Gson().fromJson(s, new TypeToken<HashMap<String, String>>() {}.getType());
+                    List<String> temp_s = new ArrayList<>();
 
                     while (rs.next()) {
                         int ccode = rs.getInt("currencies_currency_id");
@@ -191,16 +191,24 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         String symbol = curr_symbols.get(code);
                         Wallet wallet = new Wallet(code,country,symbol,amount,ccode);
                         wallets.add(wallet);
+                        temp_s.add(code);
                     }
-                    final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get().getApplicationContext());
-                    activity.get().runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
+                    if (popup) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, temp_s);
+                        ((Spinner)runQuery.data.get("to_spinner")).setAdapter(adapter);
+                        ((Spinner)runQuery.data.get("from_spinner")).setAdapter(adapter);
+                    } else {
+
+                        final MyCustomAdapter wallet_adapter = new MyCustomAdapter(wallets,activity.get().getApplicationContext());
+                        activity.get().runOnUiThread(new Runnable()
                         {
-                            ((ListView)runQuery.data.get("wallet_listview")).setAdapter(wallet_adapter);
-                        }
-                    });
+                            @Override
+                            public void run()
+                            {
+                                ((ListView)runQuery.data.get("wallet_listview")).setAdapter(wallet_adapter);
+                            }
+                        });
+                    }
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -343,6 +351,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 {
                     ResultSet rs = runQuery.dbController.getData("select * from currencies");
                     List<Rate> rates = new ArrayList<>();
+                    Boolean popup = (Boolean) runQuery.data.get("popup");
 
                     final Map<String, String> curr_symbols;
 
@@ -356,15 +365,25 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         rates.add(new Rate(r,ccode,symbol,name));
                     }
 
-                    final RateListAdapter rateListAdapter = new RateListAdapter(rates,activity.get().getApplicationContext());
-                    activity.get().runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
+                    if (popup==null){
+                        final RateListAdapter rateListAdapter = new RateListAdapter(rates,activity.get().getApplicationContext());
+                        activity.get().runOnUiThread(new Runnable()
                         {
-                            ((ListView)runQuery.data.get("rate_listview")).setAdapter(rateListAdapter);
+                            @Override
+                            public void run()
+                            {
+                                ((ListView)runQuery.data.get("rate_listview")).setAdapter(rateListAdapter);
+                            }
+                        });
+                    } else {
+                        Map<String,Rate> temp = new HashMap<>();
+                        for (Rate r:
+                             rates)
+                        {
+                            temp.put(r.currency_code,r);
                         }
-                    });
+                        ((MyApplication)activity.get().getApplication()).rates = temp;
+                    }
                 } catch (SQLException e)
                 {
                     e.printStackTrace();
