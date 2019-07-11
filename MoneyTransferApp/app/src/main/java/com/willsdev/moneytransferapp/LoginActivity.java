@@ -428,8 +428,16 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
             }
             case ADD_WALLET: {
                 String ccode = (String) runQuery.data.get("ccode");
-                String query = String.format("insert into accounts values(%s,%s,%s,%s,%s)");
-
+                int currency_id = 0;
+                try
+                {
+                    currency_id = runQuery.dbController.getData("select currency_id from currencies where code=\""+ccode+"\"").getInt("currency_id");
+                    int user_id = activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",-1);
+                    String query = String.format("insert into accounts values(%s,%s,%s)",0,user_id,currency_id);
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
