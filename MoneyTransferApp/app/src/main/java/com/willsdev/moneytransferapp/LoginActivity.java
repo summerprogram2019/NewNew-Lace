@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -40,7 +43,7 @@ class Currency {
 }
 
 enum QueryType {
-    LOGIN,GET_WALLETS,TRANSFER,SIGNUP,SETTINGS,RATES,CULTURES
+    LOGIN,GET_WALLETS,TRANSFER,SIGNUP,SETTINGS,RATES,CULTURES,WALLETS_LEFT,ADD_WALLET
 }
 
 /**
@@ -401,6 +404,32 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                break;
+            }
+            case WALLETS_LEFT: {
+                int user_id = (int) runQuery.data.get("user_id");
+                try
+                {
+                    ResultSet rs = runQuery.dbController.getData("select * from currencies where currency_id not in (select currencies_currency_id from accounts where user_id="+user_id);
+                    List<String> currencies = new ArrayList<>();
+                    while (rs.next()) {
+                        String code = rs.getString("code");
+                        currencies.add(code);
+                        System.out.println(code);
+                    }
+                    // Set Dropdown
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, currencies);
+                    ((Spinner)runQuery.data.get("spinner")).setAdapter(adapter);
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case ADD_WALLET: {
+                String ccode = (String) runQuery.data.get("ccode");
+                String query = String.format("insert into accounts values(%s,%s,%s,%s,%s)");
+
                 break;
             }
         }

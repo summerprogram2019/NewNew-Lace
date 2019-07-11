@@ -26,9 +26,7 @@
             android:fontFamily="@font/poppins_regular"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold"
-
-            />
+            android:textStyle="bold" />
         
     </LinearLayout>
 
