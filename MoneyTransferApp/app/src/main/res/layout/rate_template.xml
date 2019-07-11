@@ -17,13 +17,16 @@
             android:layout_height="35dp"
             android:layout_weight="0.8"
             android:paddingVertical="2dp"
+            android:background="@color/darkScale"
             />
         <TextView
             android:id="@+id/rate_country_name"
             android:layout_width="0dp"
+            android:background="@color/darkScale"
             android:layout_height="40dp"
             android:layout_weight="2"
-            android:fontFamily="@font/roboto_mono_light"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
             android:textSize="14sp"
             android:textStyle="bold"
             android:gravity="center_vertical"/>
@@ -33,9 +36,18 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:fontFamily="@font/cutive_mono"
+            android:textColor="@color/goldenThreads"
+            android:background="@color/darkScale"
+            android:fontFamily="@font/roboto_regular"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/mainColour">
 
     </LinearLayout>
 
