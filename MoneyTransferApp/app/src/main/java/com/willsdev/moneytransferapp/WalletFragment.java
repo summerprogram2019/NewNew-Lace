@@ -105,6 +105,7 @@ public class WalletFragment extends Fragment
             }
         });
 
+        
 //        String rateJSON = getArguments().getString("rates");
 //        List<Rate> rate_list = deserialise(rateJSON);
 //
