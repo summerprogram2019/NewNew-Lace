@@ -19,14 +19,14 @@
         android:id="@+id/signup_progress"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="@color/white"
+        android:translationZ="100dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:translationZ="100dp"
-        android:background="@color/white"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
@@ -172,18 +172,17 @@
         android:id="@+id/splash_login"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginBottom="192dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="#00CCFF"
         android:text="Finish"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/Bground"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>
