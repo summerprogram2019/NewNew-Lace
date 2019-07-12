@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:padding="1dp"
-            android:text="Currency "
+            android:text="Currency"
             android:textColor="@color/greyScale"
             android:textSize="22sp" />
 
