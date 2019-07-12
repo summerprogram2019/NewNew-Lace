@@ -39,26 +39,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="3dp"
-                android:text="Name:"
-                android:textAlignment="viewStart"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="60dp"
-                tools:layout_editor_absoluteY="248dp" />
-
-            <TextView
                 android:id="@+id/name_of_user"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="3dp"
-                android:text="Kevin Parker"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
