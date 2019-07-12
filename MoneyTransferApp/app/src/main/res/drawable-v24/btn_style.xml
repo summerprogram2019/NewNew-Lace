@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item android:state_pressed="true" android:state_focused="true">
         <shape>
             <gradient
@@ -9,6 +10,8 @@
                 android:endColor="@color/btnPressed"
                 android:angle="270"
                 />
+            <corners android:bottomLeftRadius="10dp" />
+
         </shape>
     </item>
 
@@ -20,6 +23,7 @@
                 android:endColor="@color/btnPressed"
                 android:angle="270"
                 />
+            <corners android:bottomLeftRadius="10dp" />
         </shape>
     </item>
 
@@ -31,6 +35,7 @@
                 android:endColor="@color/btnPressed"
                 android:angle="270"
                 />
+            <corners android:bottomLeftRadius="10dp" />
         </shape>
     </item>
 
@@ -42,6 +47,7 @@
                 android:endColor="#DCDCDC"
                 android:angle="270"
                 />
+            <corners android:bottomLeftRadius="10dp" />
         </shape>
     </item>
 
@@ -53,6 +59,7 @@
                 android:right="4dp"
                 android:bottom="4dp"
                 />
+            <corners android:bottomLeftRadius="10dp" />
         </shape>
     </item>
 

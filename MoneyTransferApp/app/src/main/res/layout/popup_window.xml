@@ -4,184 +4,191 @@
     android:id="@+id/popupLayout"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/darkScale"
     android:maxWidth="300dp"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:background="#555555"
+        android:background="@drawable/white_rounded"
         android:orientation="vertical"
-        android:padding="13dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/poppins_light"
-            android:text="Transfer"
-            android:textColor="@color/goldenThreads"
-            android:textSize="30sp"
-            android:textStyle="italic" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/poppins_regular"
-            android:padding="1dp"
-            android:text="From"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/darkScale">
-
-            <Spinner
-                android:id="@+id/popup_transfer_from_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/greyScale"
-                android:popupBackground="@color/white" />
-
-        </LinearLayout>
-
-
-        <EditText
-            android:id="@+id/popup_transfer_from_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#2C2E35"
-            android:ems="10"
-            android:fontFamily="@font/poppins_regular"
-            android:hint="enter amount"
-            android:inputType="numberDecimal"
-            android:paddingLeft="5dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/greyScale" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#727F89" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/poppins_regular"
-            android:padding="1dp"
-            android:text="To"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/darkScale">
-
-            <Spinner
-                android:id="@+id/popup_transfer_to_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/greyScale"
-                android:popupBackground="@color/darkScale" />
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/popup_transfer_to_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/darkScale"
-            android:ems="10"
-            android:fontFamily="@font/poppins_regular"
-            android:hint="enter amount"
-            android:inputType="numberDecimal"
-            android:paddingLeft="5dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/greyScale" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#727F89" />
+        android:padding="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/dark_rounded"
+            android:orientation="vertical"
+            android:padding="13dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/poppins_light"
+                android:text="Transfer"
+                android:textColor="@color/goldenThreads"
+                android:textSize="30sp"
+                android:textStyle="italic" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="1dp"
-                android:text="Rate:"
+                android:text="From"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/darkScale">
+
+                <Spinner
+                    android:id="@+id/popup_transfer_from_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/greyScale"
+                    android:popupBackground="@color/darkScale" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/popup_transfer_from_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#2C2E35"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="enter amount"
+                android:inputType="numberDecimal"
+                android:paddingLeft="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/greyScale" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#727F89" />
+
             <TextView
-                android:id="@+id/popup_transfer_rate"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"
+                android:fontFamily="@font/poppins_regular"
                 android:padding="1dp"
-                android:textColor="@color/goldenThreads"
-                android:textSize="20sp" />
+                android:text="To"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/darkScale">
+
+                <Spinner
+                    android:id="@+id/popup_transfer_to_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/greyScale"
+                    android:popupBackground="@color/darkScale" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/popup_transfer_to_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/darkScale"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="enter amount"
+                android:inputType="numberDecimal"
+                android:paddingLeft="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/greyScale" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#727F89" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_regular"
+                    android:padding="1dp"
+                    android:text="Rate:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/popup_transfer_rate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:padding="1dp"
+                    android:textColor="@color/goldenThreads"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#C9C9C9"
-        android:orientation="horizontal"
-        android:paddingTop="1dp">
-
-        <Button
-            android:id="@+id/popup_wallet_cancel"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0.5dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_style"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Cancel"
-            android:textColor="#ff0000"
-            android:textSize="15dp" />
+            android:background="#C9C9C9"
+            android:orientation="horizontal"
+            android:paddingTop="1dp">
 
-        <Button
-            android:id="@+id/popup_wallet_confirm"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0.5dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_style"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Confirm"
-            android:textColor="@color/btn"
-            android:textSize="15dp" />
+            <Button
+                android:id="@+id/popup_wallet_cancel"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Cancel"
+                android:textColor="#ff0000"
+                android:textSize="15dp" />
 
+            <Button
+                android:id="@+id/popup_wallet_confirm"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style2"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Confirm"
+                android:textColor="@color/btn"
+                android:textSize="15dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

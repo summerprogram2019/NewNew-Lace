@@ -187,7 +187,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         temp_s.add(code);
                     }
                     if (popup) {
-                        final ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, temp_s);
+                        final ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.spinner_item, temp_s);
                         activity.get().runOnUiThread(new Runnable()
                         {
                             @Override
@@ -463,7 +463,7 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         @Override
                         public void run()
                         {
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, currencies);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.spinner_item, currencies);
                             ((Spinner)runQuery.data.get("spinner")).setAdapter(adapter);
                         }
                     });

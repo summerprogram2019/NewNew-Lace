@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity
         // Fresh Dropdown
         final Spinner dropdown = findViewById(R.id.country_spinner);
         String[] items = new String[]{"Australia", "Russia", "China"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, items);
         dropdown.setAdapter(adapter);
 
         final EditText first_name = findViewById(R.id.signup_username);

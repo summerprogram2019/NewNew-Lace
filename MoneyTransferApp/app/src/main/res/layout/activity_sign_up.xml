@@ -177,6 +177,7 @@
             android:layout_width="329dp"
             android:layout_height="37dp"
             android:backgroundTint="#727F89"
+            android:popupBackground="@color/darkScale"
             />
     </LinearLayout>
 

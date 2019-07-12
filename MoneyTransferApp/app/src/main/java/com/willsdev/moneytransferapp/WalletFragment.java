@@ -62,6 +62,7 @@ public class WalletFragment extends Fragment
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
                 mPopupWindow[0].setElevation(100.0f);
+                mPopupWindow[0].setWidth(1100);
 
                 final Spinner country_spinner = popupView.findViewById(R.id.popup_add_wallet_country);
                 final Button confirm_btn = popupView.findViewById(R.id.popup_wallet_confirm);

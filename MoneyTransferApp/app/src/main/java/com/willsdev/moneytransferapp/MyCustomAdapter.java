@@ -116,7 +116,8 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
                 mPopupWindow[0].setElevation(100.0f);
-                mPopupWindow[0].setWidth(1000);
+                mPopupWindow[0].setWidth(1250);
+
 
                 // Set up textboxes and spinners
                 final EditText from_amt = popupView.findViewById(R.id.popup_transfer_from_amount);

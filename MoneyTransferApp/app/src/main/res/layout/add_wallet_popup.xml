@@ -4,16 +4,21 @@
     android:id="@+id/popupLayout"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="#22242B"
+    android:background="@color/darkScale"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
         android:orientation="vertical"
-        android:padding="13dp">
+        android:background="@drawable/white_rounded"
+        android:padding="3dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="13dp"
+        android:background="@drawable/dark_rounded">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,14 +35,23 @@
             android:layout_centerInParent="true"
             android:padding="1dp"
             android:text="Currency"
-            android:textColor="@color/greyScale"
+            android:textColor="@color/white"
             android:textSize="22sp" />
 
-        <Spinner
-            android:id="@+id/popup_add_wallet_country"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/greyScale" />
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/darkScale">
+
+            <Spinner
+                android:id="@+id/popup_add_wallet_country"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/greyScale"
+                android:popupBackground="@color/darkScale" />
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -47,8 +61,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#C9C9C9"
-        android:orientation="horizontal"
-        android:paddingTop="1dp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/popup_wallet_cancel"
@@ -73,6 +86,7 @@
             android:text="Confirm"
             android:textColor="@color/white" />
 
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
