@@ -253,8 +253,8 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                         NetworkThread networkThread1 = new NetworkThread(runQuery,activity);
                         networkThread1.execute();
                         mPopupWindow[0].dismiss();
-                        Intent intent = new Intent(activity.getApplication().getApplicationContext(), MainActivity.class);
-                        activity.getApplicationContext().startActivity(intent);
+                        Intent intent = new Intent(activity, MainActivity.class);
+                        activity.startActivity(intent);
                     }
                 });
 

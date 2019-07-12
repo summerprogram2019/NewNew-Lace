@@ -488,8 +488,8 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     if(status==0) {
                         //bad
                     } else {
-                        Intent intent = new Intent(activity.get().getApplication().getApplicationContext(), MainActivity.class);
-                        activity.get().getApplicationContext().startActivity(intent);
+                        Intent intent = new Intent(activity.get(), MainActivity.class);
+                        activity.get().startActivity(intent);
                     }
                 } catch (SQLException e)
                 {

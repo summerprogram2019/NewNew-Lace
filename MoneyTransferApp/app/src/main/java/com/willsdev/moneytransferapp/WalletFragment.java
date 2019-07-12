@@ -89,8 +89,8 @@ public class WalletFragment extends Fragment
                         NetworkThread networkThread1 = new NetworkThread(runQuery,getActivity());
                         networkThread1.execute();
                         mPopupWindow[0].dismiss();
-                        Intent intent = new Intent(getActivity().getApplication().getApplicationContext(), MainActivity.class);
-                        getActivity().getApplicationContext().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        getActivity().startActivity(intent);
                     }
                 });
 
