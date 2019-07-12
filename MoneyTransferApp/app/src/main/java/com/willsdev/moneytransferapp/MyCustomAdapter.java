@@ -1,12 +1,9 @@
 package com.willsdev.moneytransferapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +19,10 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static com.willsdev.moneytransferapp.MainActivity.getFlagResource;
@@ -99,7 +90,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
         TextView amount = view.findViewById(R.id.wallet_amount);
         amount.setText(curr_wallet.symbol + df.format(curr_wallet.balance));
 
-        TextView country_name = view.findViewById(R.id.wallet_country_name);
+        final TextView country_name = view.findViewById(R.id.wallet_country_name);
         country_name.setText(curr_wallet.country);
 
         ImageView flag_img = view.findViewById(R.id.wallet_country_flag);
@@ -107,7 +98,9 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
 
         final PopupWindow[] mPopupWindow = new PopupWindow[1];
 
+
         final LinearLayout container = view.findViewById(R.id.wallet_container);
+
         container.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -223,8 +216,8 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter
                 networkThread.execute();
 
                 // Set up buttons
-                Button cancel_btn = popupView.findViewById(R.id.popup_transfer_cancel);
-                Button confirm_btn = popupView.findViewById(R.id.popup_transfer_confirm);
+                Button cancel_btn = popupView.findViewById(R.id.popup_wallet_cancel);
+                Button confirm_btn = popupView.findViewById(R.id.popup_wallet_confirm);
                 cancel_btn.setOnClickListener(new View.OnClickListener()
                 {
                     @Override

@@ -106,7 +106,7 @@
         android:paddingTop="1dp">
 
         <Button
-            android:id="@+id/popup_transfer_cancel"
+            android:id="@+id/popup_wallet_cancel"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
             android:textColor="#ff0000" />
 
         <Button
-            android:id="@+id/popup_transfer_confirm"
+            android:id="@+id/popup_wallet_confirm"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

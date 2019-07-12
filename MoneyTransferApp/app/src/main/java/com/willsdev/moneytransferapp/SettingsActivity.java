@@ -19,5 +19,6 @@ public class SettingsActivity extends AppCompatActivity
         Map<String,Object> data = new HashMap<>();
         RunQuery query = new RunQuery(null,QueryType.SETTINGS,data);
         NetworkThread networkThread = new NetworkThread(query,this);
+        networkThread.execute();
     }
 }

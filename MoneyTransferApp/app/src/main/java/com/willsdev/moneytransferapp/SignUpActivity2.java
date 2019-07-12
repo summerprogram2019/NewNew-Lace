@@ -40,8 +40,8 @@ public class SignUpActivity2 extends AppCompatActivity
                     Map<String, Object> data = new HashMap<>();
                     data.put("user", username.getText().toString());
                     data.put("pass", password.getText().toString());
-                    data.put("fname", f_name);
-                    data.put("lname", l_name);
+                    data.put("name", f_name);
+                    //data.put("lname", l_name);
                     data.put("country", country);
                     data.put("language", "English");
                     data.put("pn", p_num);

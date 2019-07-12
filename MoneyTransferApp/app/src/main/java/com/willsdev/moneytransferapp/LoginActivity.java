@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -278,9 +279,13 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                         });
                     } else {
                         // get country id and language id
-                        country = runQuery.dbController.getData("select * from countries where name=\""+country+"\"").getString("country_id");
-                        language = runQuery.dbController.getData("select *  from languages where name=\""+language+"\"").getString("language_id");
-                        String query = String.format("insert into users values(\"%s\",\"%s\",\"%s\",%s,%s,%s)",
+                        rs = runQuery.dbController.getData("select * from countries where name=\""+country+"\"");
+                        rs.next();
+                        country = rs.getString("country_id");
+                        rs = runQuery.dbController.getData("select *  from languages where name=\""+language+"\"");
+                        rs.next();
+                        language = rs.getString("language_id");
+                        String query = String.format("insert into users(name,login,password,countries_country_id,languages_language_id,phone_number) values(\"%s\",\"%s\",\"%s\",%s,%s,%s)",
                                 name,
                                 user,
                                 pass,
@@ -334,8 +339,28 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                     if(id==-1) {
 
                     } else {
-                        ResultSet rs = runQuery.dbController.getData("select * from users where user_id="+id);
-                        String pn = rs.getString("phone_number");
+                        String query = "select * from users where user_id="+id;
+                        System.out.println(query);
+                        ResultSet rs = runQuery.dbController.getData(query);
+                        rs.next();
+                        final int pn = rs.getInt("phone_number");
+                        final String user = rs.getString("name");
+                        int lang_id = rs.getInt("languages_language_id");
+                        ResultSet temp = runQuery.dbController.getData("select name from languages where language_id="+lang_id);
+                        temp.next();
+                        final String language = temp.getString("name");
+
+                        activity.get().runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                ((TextView)activity.get().findViewById(R.id.name_of_user)).setText("name: "+user);
+                                ((TextView)activity.get().findViewById(R.id.phone_number)).setText("P/N: "+pn);
+                                ((TextView)activity.get().findViewById(R.id.language)).setText("language: "+language);
+
+                            }
+                        });
                     }
                 } catch (SQLException e)
                 {
@@ -423,19 +448,26 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 break;
             }
             case WALLETS_LEFT: {
-                int user_id = (int) runQuery.data.get("user_id");
+                int user_id = activity.get().getSharedPreferences("userdetails",Context.MODE_PRIVATE).getInt("user_id",-1);
                 try
                 {
-                    ResultSet rs = runQuery.dbController.getData("select * from currencies where currency_id not in (select currencies_currency_id from accounts where user_id="+user_id);
-                    List<String> currencies = new ArrayList<>();
+                    ResultSet rs = runQuery.dbController.getData("select * from currencies where currency_id not in (select currencies_currency_id from accounts where users_user_id="+user_id+")");
+                    final List<String> currencies = new ArrayList<>();
                     while (rs.next()) {
                         String code = rs.getString("code");
                         currencies.add(code);
-                        System.out.println(code);
                     }
                     // Set Dropdown
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, currencies);
-                    ((Spinner)runQuery.data.get("spinner")).setAdapter(adapter);
+                    activity.get().runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(activity.get().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, currencies);
+                            ((Spinner)runQuery.data.get("spinner")).setAdapter(adapter);
+                        }
+                    });
+
                 } catch (SQLException e)
                 {
                     e.printStackTrace();
@@ -447,9 +479,11 @@ class NetworkThread extends AsyncTask<RunQuery, String, Map>
                 int currency_id = 0;
                 try
                 {
-                    currency_id = runQuery.dbController.getData("select currency_id from currencies where code=\""+ccode+"\"").getInt("currency_id");
+                    ResultSet rs = runQuery.dbController.getData("select currency_id from currencies where code=\""+ccode+"\"");
+                    rs.next();
+                    currency_id = rs.getInt("currency_id");
                     int user_id = activity.get().getSharedPreferences("userdetails", Context.MODE_PRIVATE).getInt("user_id",-1);
-                    String query = String.format("insert into accounts values(%s,%s,%s)",0,user_id,currency_id);
+                    String query = String.format("insert into accounts(amount,users_user_id,currencies_currency_id) values(%s,%s,%s)",0,user_id,currency_id);
                     int status = runQuery.dbController.update(query);
                     if(status==0) {
                         //bad
